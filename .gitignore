@@ -34,3 +34,12 @@ vignettes/*.pdf
 
 # Shiny token, see https://shiny.rstudio.com/articles/shinyapps.html
 rsconnect/
+
+# TCGA download files
+input/GDCdata
+
+# ProjectTemplate cached data structures and files
+cache/
+
+# ProjectTemplate output folder
+output/
