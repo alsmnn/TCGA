@@ -36,6 +36,7 @@ ProjectTemplate::cache("raw_tcga", depends = c("project_ids"), {
     # assign names
     #
     names(raw_tcga) <- gsub("-", "_", project_ids)
+    raw_tcga
   }
 )
 
