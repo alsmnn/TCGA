@@ -55,22 +55,13 @@ for (i in seq_along(names(raw_tcga))) {
 
 # Preprocess TCGA data ----------------------------------------------------
 
-tcga <- lapply(
-  raw_tcga,
-  munge_tcga
-  )
-
-# assign names earlier created
-#
-
-names(tcga) <- tcga_names
-
-
 # cache the normalized data sets.
 ProjectTemplate::cache("tcga", depends = c("raw_tcga"), {
   tcga <- lapply(
     raw_tcga,
     munge_tcga
   )
+  names(tcga) <- tcga_names
+  tcga
 }
 )
