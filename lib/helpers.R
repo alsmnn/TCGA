@@ -46,8 +46,10 @@ prepare_tcga <- function(project_id) {
 # we need a factor without spaces for DESeq analysis to work
 #
 
-race_wo <- function(raw_data) {
-  race_wo_na <- raw_data[, !is.na(raw_data$race)]
+race_wo <- function(data) {
+  if (class(data)[1] != "RangedSummarizedExperiment")
+    stop("data must be of class 'RangedSummarizedExperiment'")
+  race_wo_na <- data[, !is.na(data$race)]
 
   race_wo_na$race_wo <- NA
 
@@ -88,9 +90,11 @@ race_wo <- function(raw_data) {
 # create DSeqDataSet of SummarizedExperiments
 #
 
-dds_conversion <- function(tcga) {
+dds_conversion <- function(data) {
+  if (class(data)[1] != "RangedSummarizedExperiment")
+    stop("data must be of class 'RangedSummarizedExperiment'")
   dds <- DESeqDataSet(
-    tcga,
+    data,
     design = ~race_wo
   )
   dds
@@ -113,10 +117,14 @@ round2 <- function(x, n = 0) {
 # create a DGEList element out of DESeqDataSet
 #
 
-normalize_tcga <- function(dds) {
-  dgelist <- as.DGEList(dds)
+normalize_tcga <- function(data) {
+
+  if(class(data)[1] != "DESeqDataSet")
+    stop("data must be of class 'DESeqDataSet'")
+
+  dgelist <- as.DGEList(data)
   # Keep only genes expressed in >= 50% of the samples and recalculate libsize
-  keep <- rowSums(cpm(dgelist) > 0.1) >= round2(nrow(colData(dds)) / 2)
+  keep <- rowSums(cpm(dgelist) > 0.1) >= round2(nrow(colData(data)) / 2)
 
   dgelist <- dgelist[keep, ,
     keep.lib.sizes = FALSE
@@ -138,11 +146,15 @@ normalize_tcga <- function(dds) {
 # calculate log2 of cpm counts
 #
 
-log2_cpm <- function(dgelist) {
-  tcga <- as.DESeqDataSet(dgelist)
+log2_cpm <- function(data) {
+
+  if(class(data)[1] != "DGEList")
+    stop("data must be of class 'DGEList'")
+
+  tcga <- as.DESeqDataSet(data)
   # log2 transformation of cpm
   assays(tcga)$log2ps_counts <- cpm(
-    dgelist$pseudo.counts,
+    data$pseudo.counts,
     log = TRUE
   )
   tcga
