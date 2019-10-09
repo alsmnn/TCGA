@@ -43,6 +43,7 @@ prepare_tcga <- function(project_id) {
   tcga_data
 }
 
+
 # we need a factor without spaces for DESeq analysis to work
 #
 
@@ -143,6 +144,7 @@ normalize_tcga <- function(data) {
   dgelist
 }
 
+
 # calculate log2 of cpm counts
 #
 
@@ -159,6 +161,9 @@ log2_cpm <- function(data) {
   )
   tcga
 }
+
+# this function calculates surv_times for patients still alive
+#
 
 create_surv_times <- function(tcga) {
   # if patients are not dead assign "days_to_last_follow_up" to the $surv_time
@@ -178,6 +183,10 @@ create_surv_times <- function(tcga) {
   tcga
 }
 
+
+# collapse functions above into one function
+#
+
 munge_tcga <- function(raw_data) {
   # we need a factor without spaces for DESeq analysis to work
   raw_data <- race_wo(raw_data)
@@ -191,3 +200,5 @@ munge_tcga <- function(raw_data) {
   raw_data <- create_surv_times(raw_data)
   raw_data
 }
+
+
