@@ -8,8 +8,9 @@ munging: TRUE
 logging: FALSE
 logging_level: INFO
 load_libraries: TRUE
-libraries: reshape2, plyr, tidyverse, lubridate, rstatix, TCGAbiolinks, knitr, ggfortify, ggstat,
-             ComplexHeatmap, DESeq2, DEFormats, survminer, survival, corrplot, edgeR
+libraries: reshape2, plyr, tidyverse, lubridate, rstatix, TCGAbiolinks, knitr,
+             ggfortify, ggstat, ComplexHeatmap, DESeq2, DEFormats, survminer,
+             survival, corrplot, edgeR, maftools
 as_factors: TRUE
 tables_type: tibble
 attach_internal_libraries: FALSE
