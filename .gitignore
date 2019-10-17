@@ -43,7 +43,3 @@ cache/
 
 # ProjectTemplate output folder
 output/
-
-# Packrat library folders
-packrat/lib*/
-packrat/src/
